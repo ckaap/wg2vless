@@ -22,7 +22,7 @@ sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables ip
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
 
 # Клонируем репозиторий
-git clone https://github.com/Letowski/wg2vless.git
+git clone https://github.com/ckaap/wg2vless.git
 sleep 2
 cd wg2vless
 
