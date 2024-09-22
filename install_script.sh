@@ -80,9 +80,9 @@ else
 fi
 
 # Поиск сайта для маскировки используя RealiTLScanner
-export XRAY_SITE=EMPTY
-chmod +x ./RealiTLScanner
-timeout 60s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
+wget https://github.com/XTLS/RealiTLScanner/releases/download/v0.2.1/RealiTLScanner-linux-64
+chmod +x ./RealiTLScanner-linux-64
+timeout 60s ./RealiTLScanner-linux-64 -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
 export XRAY_SITE=$(tail -1 sites.csv | cut -d ',' -f3 | sed 's/^*\.\(.*\)/\1/')
 if [[ "$XRAY_SITE" == "CERT_DOMAIN" || -z "$XRAY_SITE" ]]; then
     echo "Не найден валидный сайт для маскировки. Используем сайт по умолчанию."
