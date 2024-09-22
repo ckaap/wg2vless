@@ -130,7 +130,7 @@ sed -i \
 rm /usr/local/etc/xray/config.json
 cp enter_node/config.json /usr/local/etc/xray/config.json
 systemctl restart xray fail2ban
-sleep 2
+sleep 1
 
 # Настройка exit node
 sshpass -p "$EXIT_PASSWORD" ssh -o StrictHostKeyChecking=no $EXIT_USER@$IP_EXIT << EOF
@@ -142,24 +142,23 @@ grep -qxF 'net.ipv4.ip_forward=1' /etc/sysctl.conf || echo 'net.ipv4.ip_forward=
 sysctl -p
 EOF
 sshpass -p "$EXIT_PASSWORD" ssh -o StrictHostKeyChecking=no $EXIT_USER@$IP_EXIT 'bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root'
-sed -i -e "s/XRAY_UUID/$XRAY_UUID/g" exit_node/config.json
-sed -i -e "s/XRAY_SITE/$XRAY_SITE/g" exit_node/config.json
-sed -i -e "s/XRAY_PRIVATE/$XRAY_PRIVATE/g" exit_node/config.json
-sed -i -e "s/XRAY_SHORT/$XRAY_SHORT/g" exit_node/config.json
+sed -i -e "s/XRAY_UUID/$XRAY_UUID/g" \
+    -e "s/XRAY_SITE/$XRAY_SITE/g" \
+    -e "s/XRAY_PRIVATE/$XRAY_PRIVATE/g" \
+    exit_node/config.json
 sshpass -p "$EXIT_PASSWORD" scp -o StrictHostKeyChecking=no "exit_node/config.json" "$EXIT_USER@$IP_EXIT:/usr/local/etc/xray/config.json"
 sshpass -p "$EXIT_PASSWORD" ssh -o StrictHostKeyChecking=no $EXIT_USER@$IP_EXIT << EOF
 systemctl restart xray fail2ban
-sleep 2
-systemctl status xray
 EOF
 
-rm -rf wg2vless
-rm ./info.txt
+
+rm ../info.txt
+rm -rf ../wg2vless
+clear
 
 # show WG client config
 echo -e "${GREEN}\nHere is your client config file as a QR Code:\n${NC}"
 qrencode -t ansiutf8 -l L <"enter_node/wg_client.conf"
-echo ""
 
 echo -e "${GREEN}Your client config file is in enter_node/wg_client.conf"
 
