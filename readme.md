@@ -1,7 +1,7 @@
-# 2 steps nextgen vpn
+# Двухступенчатый VPN (WG+VLESS)
 
-#### Requirements
-2 debian 12 (minimal) instances (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
+#### Рекомендации
+Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
 
 # Настройка enter node
     apt update && sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban  
