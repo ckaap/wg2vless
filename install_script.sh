@@ -14,12 +14,14 @@ read -s -p "Введите пароль для exit node: " EXIT_PASSWORD
 echo "EXIT_PASSWORD=$EXIT_PASSWORD" >> info.txt
 echo "########################################################"
 
-git clone https://github.com/Letowski/wg2vless.git
-sleep 2
-cd wg2vless
 
 # Устанавливаем пакеты на enter node
 apt update && apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
+
+# Клонируем репозиторий
+git clone https://github.com/Letowski/wg2vless.git
+sleep 2
+cd wg2vless
 
 # Устанавливаем XRAY
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
