@@ -12,8 +12,6 @@ echo "EXIT_USER=$EXIT_USER" >> info.txt
 read -s -p "Введите пароль для exit node: " EXIT_PASSWORD
 echo "EXIT_PASSWORD=$EXIT_PASSWORD" >> info.txt
 
-
-
 # Устанавливаем пакеты на enter node
 apt update 1>/dev/null && apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid 1>/dev/null
 sleep 1
