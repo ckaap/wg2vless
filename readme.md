@@ -1,7 +1,7 @@
 # Двухступенчатый VPN (WG+VLESS)
 
 #### Рекомендации
-Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
+2 Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
 
 # Автоматическая установка
 	curl -L -o install_script.sh https://github.com/ckaap/wg2vless/releases/download/v0.1.0/install_script.sh
