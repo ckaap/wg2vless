@@ -5,18 +5,17 @@ if [ "$EUID" -ne 0 ]; then
 fi
 clear
 # Получаем данные exit node
-echo "########################################################"
 read -p "Введите IP exit node: " IP_EXIT
 echo "IP_EXIT=$IP_EXIT" >> info.txt
 read -p "Введите логин для exit node: " EXIT_USER
 echo "EXIT_USER=$EXIT_USER" >> info.txt
 read -s -p "Введите пароль для exit node: " EXIT_PASSWORD
 echo "EXIT_PASSWORD=$EXIT_PASSWORD" >> info.txt
-echo "########################################################"
+
 
 
 # Устанавливаем пакеты на enter node
-apt update && apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
+apt update 1>/dev/null && apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid 1>/dev/null
 sleep 1
 # Клонируем репозиторий
 git clone https://github.com/ckaap/wg2vless.git
