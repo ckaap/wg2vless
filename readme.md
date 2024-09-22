@@ -3,7 +3,12 @@
 #### Рекомендации
 Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
 
-# Настройка enter node
+# Автоматическая установка
+	curl -L -o install_script.sh https://github.com/ckaap/wg2vless/releases/download/v0.1.0/install_script.sh
+ 	chmod +x ./install_script.sh
+	./install_script.sh
+# Ручная установка
+## Настройка enter node
     apt update && sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban  
     git clone https://github.com/ckaap/wg2vless.git
     cd wg2vless
