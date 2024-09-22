@@ -49,10 +49,10 @@ sed -i \
 enter_node/wg0.conf
 cp enter_node/wg0.conf /etc/wireguard/wg0.conf
 sed -i \
-    -e "s|WG_CLIENT_PRIVATE|$WG_CLIENT_PRIVATE|g" \
-    -e "s|WG_SERVER_PUBLIC|$WG_SERVER_PUBLIC|g" \
-    -e "s|IP_ENTER|$IP_ENTER|g" \
-    enter_node/wg_client.conf
+-e "s|WG_CLIENT_PRIVATE|$WG_CLIENT_PRIVATE|g" \
+-e "s|WG_SERVER_PUBLIC|$WG_SERVER_PUBLIC|g" \
+-e "s|IP_ENTER|$IP_ENTER|g" \
+enter_node/wg_client.conf
 
 # Запуск WireGuard
 systemctl start wg-quick@wg0.service
@@ -78,13 +78,29 @@ netfilter-persistent save
 
 mv routes /usr/local/bin
 mv ./routes.sh /usr/local/bin
-chmod +x routes.sh
-if [ -f "./routes.sh" ]; then
-  chmod +x routes.sh
-  ./routes.sh
+cat << EOF > /etc/systemd/system/route-rules.service
+[Unit]
+Description=Custom IP Rules for Routing
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/routes.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+chmod +x /usr/local/bin/routes.sh
+if [ -f "/usr/local/bin/routes.sh" ]; then
+  chmod +x /usr/local/bin/routes.sh
+  /usr/local/bin/routes.sh
 else
   echo "Файл routes.sh не найден. Пропускаем этот шаг."
 fi
+systemctl daemon-reload
+systemctl enable route-rules.service
 
 # Поиск сайта для маскировки используя RealiTLScanner
 wget https://github.com/XTLS/RealiTLScanner/releases/download/v0.2.1/RealiTLScanner-linux-64
