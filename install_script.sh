@@ -17,10 +17,10 @@ echo "########################################################"
 
 # Устанавливаем пакеты на enter node
 apt update && apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
-
+sleep 1
 # Клонируем репозиторий
-git clone https://github.com/Letowski/wg2vless.git
-sleep 2
+git clone https://github.com/ckaap/wg2vless.git
+sleep 1
 cd wg2vless
 
 # Устанавливаем XRAY
