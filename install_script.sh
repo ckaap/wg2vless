@@ -83,7 +83,7 @@ fi
 
 # Поиск сайта для маскировки используя RealiTLScanner
 chmod +x ./RealiTLScanner
-timeout 30s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
+timeout 60s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
 export XRAY_SITE=$(tail -1 sites.csv | cut -d ',' -f3 | sed 's/^*\.\(.*\)/\1/')
 rm sites.csv RealiTLScanner
 echo "export XRAY_SITE="$XRAY_SITE >> info.txt
