@@ -163,7 +163,7 @@ apt install -y git curl uuid iptables wget tcpdump fail2ban
 # enable port forwarding
 grep -qxF 'net.ipv4.ip_forward=1' /etc/sysctl.conf || echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
 sysctl -p
-EOF
+EOF || { echo "Ошибка подключения к $IP_EXIT"; exit 1; }
 sshpass -p "$EXIT_PASSWORD" ssh -o StrictHostKeyChecking=no $EXIT_USER@$IP_EXIT 'bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root'
 sed -i -e "s/XRAY_UUID/$XRAY_UUID/g" \
     -e "s/XRAY_SITE/$XRAY_SITE/g" \
