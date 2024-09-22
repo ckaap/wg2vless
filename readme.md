@@ -24,7 +24,6 @@
 ## Получаем внешний IP
     export IP_ENTER=$(curl -s https://api.ipify.org)
 ## Генерация ключей для сервера и клиента Wireguard
-    umask 077
     wg genkey > server_private_key.txt
     wg pubkey < server_private_key.txt > server_public_key.txt
     wg genkey > client_private_key.txt
@@ -34,12 +33,16 @@
     export WG_CLIENT_PUBLIC=$(cat client_public_key.txt)
     export WG_CLIENT_PRIVATE=$(cat client_private_key.txt)
     echo "export WG_CLIENT_PRIVATE=$WG_CLIENT_PRIVATE" >> info.txt
-    sed -i -e "s|WG_SERVER_PRIVATE|$WG_SERVER_PRIVATE|g" enter_node/wg0.conf
-    sed -i -e "s|WG_CLIENT_PUBLIC|$WG_CLIENT_PUBLIC|g" enter_node/wg0.conf
+    sed -i \
+	-e "s|WG_SERVER_PRIVATE|$WG_SERVER_PRIVATE|g" \
+	-e "s|WG_CLIENT_PUBLIC|$WG_CLIENT_PUBLIC|g" \
+	enter_node/wg0.conf
     cp enter_node/wg0.conf /etc/wireguard/wg0.conf
-    sed -i -e "s|WG_CLIENT_PRIVATE|$WG_CLIENT_PRIVATE|g" enter_node/wg_client.conf
-    sed -i -e "s|WG_SERVER_PUBLIC|$WG_SERVER_PUBLIC|g" enter_node/wg_client.conf
-    sed -i -e "s|IP_ENTER|$IP_ENTER|g" enter_node/wg_client.conf
+    sed -i \
+	-e "s|WG_CLIENT_PRIVATE|$WG_CLIENT_PRIVATE|g" \
+	-e "s|WG_SERVER_PUBLIC|$WG_SERVER_PUBLIC|g" \
+	-e "s|IP_ENTER|$IP_ENTER|g" \
+	enter_node/wg_client.conf
 ## Запуск WireGuard
     wg-quick up wg0
     systemctl enable wg-quick@wg0.service
