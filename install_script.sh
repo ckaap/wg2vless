@@ -82,11 +82,10 @@ else
 fi
 
 # Поиск сайта для маскировки используя RealiTLScanner
-wget https://github.com/XTLS/RealiTLScanner/releases/download/v0.2.1/RealiTLScanner-linux-64
-chmod +x ./RealiTLScanner-linux-64
-timeout 30s ./RealiTLScanner-linux-64 -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
+chmod +x ./RealiTLScanner
+timeout 30s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
 export XRAY_SITE=$(tail -1 sites.csv | cut -d ',' -f3 | sed 's/^*\.\(.*\)/\1/')
-rm sites.csv RealiTLScanner-linux-64
+rm sites.csv RealiTLScanner
 echo "export XRAY_SITE="$XRAY_SITE >> info.txt
 
 # Генерация XRAY UUID и ключей
