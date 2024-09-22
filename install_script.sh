@@ -16,7 +16,7 @@ echo
 # Устанавливаем пакеты на enter node
 sudo apt-get update
 sleep 1
-sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban
+sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
 
 # Устанавливаем XRAY
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
@@ -90,7 +90,7 @@ rm sites.csv RealiTLScanner-linux-64
 echo "export XRAY_SITE="$XRAY_SITE >> info.txt
 
 # Генерация XRAY UUID и ключей
-export XRAY_UUID=$(uuidgen)
+export XRAY_UUID=$(uuid -v 4)
 echo "export XRAY_UUID=$XRAY_UUID" >> info.txt
 
 # Генерация приватного и публичного ключа с использованием Xray
