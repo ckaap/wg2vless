@@ -54,7 +54,7 @@ sed -i -e "s|WG_SERVER_PUBLIC|$WG_SERVER_PUBLIC|g" enter_node/wg_client.conf
 sed -i -e "s|IP_ENTER|$IP_ENTER|g" enter_node/wg_client.conf
 
 # Запуск WireGuard
-wg-quick up wg0
+systemctl start wg-quick@wg0.service
 systemctl enable wg-quick@wg0.service
 
 # Устанавливаем tun2socks
