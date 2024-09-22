@@ -82,9 +82,15 @@ else
 fi
 
 # Поиск сайта для маскировки используя RealiTLScanner
+export XRAY_SITE=EMPTY
 chmod +x ./RealiTLScanner
 timeout 60s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
 export XRAY_SITE=$(tail -1 sites.csv | cut -d ',' -f3 | sed 's/^*\.\(.*\)/\1/')
+if [[ "$XRAY_SITE" == "CERT_DOMAIN" || -z "$XRAY_SITE" ]]; then
+    echo "Не найден валидный сайт для маскировки. Используем сайт по умолчанию."
+    export XRAY_SITE="google.com"
+fi
+echo "Выбран сайт для маскировки: $XRAY_SITE"
 rm sites.csv RealiTLScanner
 echo "export XRAY_SITE="$XRAY_SITE >> info.txt
 
