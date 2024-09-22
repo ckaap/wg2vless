@@ -75,7 +75,7 @@ iptables -t nat -A POSTROUTING -o $INTERFACE -j MASQUERADE
 iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 netfilter-persistent save
 
-
+# Настраиваем автоматическое добавление маршрутов после перезагрузки
 mv routes /usr/local/bin
 mv ./routes.sh /usr/local/bin
 cat << EOF > /etc/systemd/system/route-rules.service
@@ -92,12 +92,13 @@ RemainAfterExit=yes
 WantedBy=multi-user.target
 EOF
 
-chmod +x /usr/local/bin/routes.sh
+# Добавляем маршруты руками и создаём службу
 if [ -f "/usr/local/bin/routes.sh" ]; then
   chmod +x /usr/local/bin/routes.sh
   /usr/local/bin/routes.sh
 else
-  echo "Файл routes.sh не найден. Пропускаем этот шаг."
+  echo "Файл routes.sh не найден. Остановка."
+  exit 1
 fi
 systemctl daemon-reload
 systemctl enable route-rules.service
