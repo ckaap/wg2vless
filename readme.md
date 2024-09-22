@@ -4,7 +4,6 @@
 
 # Клонируем репозиторий
 	sudo apt update && sudo apt install -y git
-	clear
 	git clone https://github.com/ckaap/wg2vless.git
 	cd wg2vless && chmod +x ./install_script.sh && ./install_script.sh
 
