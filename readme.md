@@ -70,7 +70,7 @@ Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
 #### Поиск сайта для маскировки используя RealiTLScanner
 	wget -O RealiTLScanner https://github.com/XTLS/RealiTLScanner/releases/download/v0.2.1/RealiTLScanner-linux-64
 	chmod +x ./RealiTLScanner
-	timeout 30s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
+	timeout 60s ./RealiTLScanner -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
 	export XRAY_SITE=$(tail -1 sites.csv | cut -d ',' -f3 | sed 's/^*\.\(.*\)/\1/')
 	rm sites.csv RealiTLScanner
 	echo "export XRAY_SITE="$XRAY_SITE >> info.txt
