@@ -3,28 +3,22 @@ if [ "$EUID" -ne 0 ]; then
   echo "Пожалуйста, запустите скрипт с правами root."
   exit 1
 fi
-
+clear
 # Получаем данные exit node
+echo "########################################################"
 read -p "Введите IP exit node: " IP_EXIT
 echo "IP_EXIT=$IP_EXIT" >> info.txt
 read -p "Введите логин для exit node: " EXIT_USER
 echo "EXIT_USER=$EXIT_USER" >> info.txt
 read -s -p "Введите пароль для exit node: " EXIT_PASSWORD
 echo "EXIT_PASSWORD=$EXIT_PASSWORD" >> info.txt
-echo
+echo "########################################################"
 
 # Устанавливаем пакеты на enter node
-sudo apt-get update
-sleep 1
 sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
 
 # Устанавливаем XRAY
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
-
-# Клонируем репозиторий
-git clone https://github.com/ckaap/wg2vless.git
-sleep 2
-cd wg2vless
 
 # Включаем проброс трафика
 grep -qxF 'net.ipv4.ip_forward=1' /etc/sysctl.conf || echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
