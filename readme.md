@@ -43,9 +43,8 @@ Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
 	-e "s|IP_ENTER|$IP_ENTER|g" \
 	enter_node/wg_client.conf
 #### Запуск WireGuard
-    wg-quick up wg0
+    systemctl start wg-quick@wg0.service
     systemctl enable wg-quick@wg0.service
-    sleep 1
 #### Установка tun2socks
     wget -O tun2socks-linux-amd64.zip https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-linux-amd64.zip
     unzip tun2socks-linux-amd64.zip
@@ -127,8 +126,6 @@ Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
     sshpass -p "$EXIT_PASSWORD" scp -o StrictHostKeyChecking=no "exit_node/config.json" "$EXIT_USER@$IP_EXIT:/usr/local/etc/xray/config.json"
     sshpass -p "$EXIT_PASSWORD" ssh -o StrictHostKeyChecking=no $EXIT_USER@$IP_EXIT << EOF
     systemctl restart xray fail2ban
-    sleep 2
-    systemctl status xray
     EOF 
 #### Генерация QR
     RED='\033[0;31m'
@@ -136,13 +133,12 @@ Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
     GREEN='\033[0;32m'
     echo -e "${GREEN}\nHere is your client config file as a QR Code:\n${NC}"
     qrencode -t ansiutf8 -l L <"enter_node/wg_client.conf"
-    echo ""
-    echo -e "${GREEN}Your client config file is in enter_node/wg_client.conf"
+    echo -e "${GREEN}Your client config file is in enter_node/wg_client.conf${NC}"
 #### Проверка работы socks
     if [ "$(curl -s -x socks5h://127.0.0.1:20170 eth0.me 2>/dev/null)" = "$IP_EXIT" ]; then
-      echo -e "${GREEN}TEST VPN - ON${NC}"
+      echo -e "TEST VPN - ON"
     else
-      echo -e "${RED}TEST VPN - OFF${NC}"
+      echo -e "TEST VPN - OFF"
     fi
     echo "Скрипт завершен."
 # Удалить файлы с данными
