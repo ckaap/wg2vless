@@ -15,7 +15,7 @@ echo "EXIT_PASSWORD=$EXIT_PASSWORD" >> info.txt
 echo "########################################################"
 
 # Устанавливаем пакеты на enter node
-sudo apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
+apt install -y sshpass git curl unzip wireguard wireguard-tools iptables iptables-persistent wget tcpdump qrencode fail2ban uuid
 
 # Устанавливаем XRAY
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root
@@ -129,9 +129,9 @@ sleep 2
 
 # Настройка exit node
 sshpass -p "$EXIT_PASSWORD" ssh -o StrictHostKeyChecking=no $EXIT_USER@$IP_EXIT << EOF
-sudo apt update
+apt update
 sleep 1
-sudo apt install -y git curl uuid iptables wget tcpdump fail2ban
+apt install -y git curl uuid iptables wget tcpdump fail2ban
 # enable port forwarding
 grep -qxF 'net.ipv4.ip_forward=1' /etc/sysctl.conf || echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
 sysctl -p
