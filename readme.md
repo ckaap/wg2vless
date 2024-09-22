@@ -3,8 +3,10 @@
 
 
 # Клонируем репозиторий
-git clone https://github.com/ckaap/wg2vless.git
-cd wg2vless && chmod +x ./install_script.sh && ./install_script.sh
+sudo aptupdate && sudo apt install -y git  
+clear  
+git clone https://github.com/ckaap/wg2vless.git  
+cd wg2vless && chmod +x ./install_script.sh && ./install_script.sh  
 
 #### Рекомендации
 Debian 12 ноды (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
