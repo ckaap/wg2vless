@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-search_dir=routes
+search_dir=/usr/local/bin/routes
 for filename in "$search_dir"/*.txt
 do
   echo "file = $filename"
