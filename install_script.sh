@@ -1,4 +1,8 @@
 #!/bin/bash
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+
 if [ "$EUID" -ne 0 ]; then
   echo "Пожалуйста, запустите скрипт с правами root."
   exit 1
@@ -59,7 +63,7 @@ systemctl start wg-quick@wg0.service
 systemctl enable wg-quick@wg0.service
 
 # Устанавливаем tun2socks
-wget -O tun2socks-linux-amd64.zip https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-linux-amd64.zip
+wget -O tun2socks-linux-amd64.zip https://github.com/xjasonlyu/tun2socks/releases/download/v2.5.2/tun2socks-linux-amd64.zip || { echo "Ошибка скачивания tun2socks"; exit 1; }
 unzip tun2socks-linux-amd64.zip
 chmod +x ./tun2socks-linux-amd64
 mv ./tun2socks-linux-amd64 /usr/local/bin/tun2socks
@@ -104,7 +108,7 @@ systemctl daemon-reload
 systemctl enable route-rules.service
 
 # Поиск сайта для маскировки используя RealiTLScanner
-wget https://github.com/XTLS/RealiTLScanner/releases/download/v0.2.1/RealiTLScanner-linux-64
+wget https://github.com/XTLS/RealiTLScanner/releases/download/v0.2.1/RealiTLScanner-linux-64 || { echo "Ошибка скачивания RealiTLScanne"; exit 1; }
 chmod +x ./RealiTLScanner-linux-64
 timeout 60s ./RealiTLScanner-linux-64 -addr $IP_EXIT -port 443 -timeout 5 -out sites.csv
 export XRAY_SITE=$(tail -1 sites.csv | cut -d ',' -f3 | sed 's/^*\.\(.*\)/\1/')
