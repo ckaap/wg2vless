@@ -8,7 +8,7 @@
 2 ноды Debian 12 (1 core, 400+mb ram, 3+gb storage, unlimited traffic)
 
 # Автоматическая установка
-	curl -L -o install_script.sh https://github.com/ckaap/wg2vless/releases/download/v0.1.0/install_script.sh
+	curl -L -o install_script.sh https://github.com/ckaap/wg2vless/releases/download/v0.1.3/install_script.sh
  	chmod +x ./install_script.sh
 	./install_script.sh
 # Ручная установка
